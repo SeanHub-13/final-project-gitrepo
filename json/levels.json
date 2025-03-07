@@ -1,0 +1,28 @@
+{
+    "level0": {
+        "walls": [
+            {
+                "x": 100,
+                "y": 200,
+                "texture": "ground"
+            },
+            {
+                "x": 300,
+                "y": 200,
+                "texture": "ground"
+            }
+        ],
+        "interactables": [
+            {
+                "x": 150,
+                "y": 250,
+                "texture": "flower"
+            },
+            {
+                "x": 400,
+                "y": 300,
+                "texture": "flower"
+            }
+        ]
+    }
+}
