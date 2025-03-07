@@ -48,22 +48,22 @@ class Player extends Phaser.Physics.Arcade.Sprite {
 
         // Horizontal movement
         if (this.cursors.left.isDown) {
-            this.setVelocityX(-160);
+            this.setVelocityX(-300);
             this.anims.play('left', true);
             this.moving = true;
         } else if (this.cursors.right.isDown) {
-            this.setVelocityX(160);
+            this.setVelocityX(300);
             this.anims.play('right', true);
             this.moving = true;
         }
 
         // Vertical movement
         if (this.cursors.up.isDown) {
-            this.setVelocityY(-160);
+            this.setVelocityY(-300);
             this.anims.play('up', true);
             this.moving = true;
         } else if (this.cursors.down.isDown) {
-            this.setVelocityY(160);
+            this.setVelocityY(300);
             this.anims.play('down', true);
             this.moving = true;
         }

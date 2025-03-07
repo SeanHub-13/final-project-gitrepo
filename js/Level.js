@@ -11,6 +11,8 @@ class Level {
 
         this.scene.physics.add.collider(this.player, this.walls);
         this.scene.physics.add.overlap(this.player, this.interactables, this.consoleLog, null, this);
+        this.scene.physics.world.setBounds(0, 0, this.levelData.config[0].worldWidth, this.levelData.config[0].worldHeight);
+        this.tilesprite = this.scene.add.tileSprite(0, 0, this.levelData.config[0].worldWidth, this.levelData.config[0].worldHeight, this.levelData.config[0].backgroundImage).setOrigin(0, 0).setDepth(-1);
 
         for (let i = 0; i < this.levelData.walls.length; i++) { // Handles Static Objects (Walls Mostly =] )
             let wall = this.levelData.walls[i];
@@ -26,6 +28,7 @@ class Level {
     levelChecker() {
         // Put stuff that we might check for in a level here, like a specific goal type
         // Maybe "collect X amount of stars", with X being a variable you get in the constructor
+        this.tilesprite.tilePositionY -= 1;
     }
 
     consoleLog(interactable) {

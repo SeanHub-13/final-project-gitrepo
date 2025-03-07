@@ -1,5 +1,12 @@
 {
     "level0": {
+        "config": [
+            {
+                "worldWidth": 1600,
+                "worldHeight": 1600,
+                "backgroundImage": "sky"
+            }
+        ],
         "walls": [
             {
                 "x": 100,
