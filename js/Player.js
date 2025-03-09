@@ -6,7 +6,7 @@ class Player extends Phaser.Physics.Arcade.Sprite {
         scene.add.existing(this);
         scene.physics.add.existing(this);
 
-        this.setCircle(this.width / 2, this.height / 3, this.width / 3, this.height / 2);
+        this.setCircle(Math.min(this.width, this.height), this.width / 4, this.height / 2);
         this.setCollideWorldBounds(true);
         this.speed = speed;
 
@@ -14,62 +14,109 @@ class Player extends Phaser.Physics.Arcade.Sprite {
             key: "left",
             // frames: this.anims.generateFrameNumbers('dude', { start: 0, end: 3 }),
             frames: [{ key: "playerIMG", frame: 0 }],
-            frameRate: 10,
-            repeat: -1
+            frameRate: 10
         });
 
         this.anims.create({
-            key: "up",
+            key: "up_left",
             frames: [{ key: "playerIMG", frame: 1 }],
             frameRate: 10
         });
 
         this.anims.create({
             key: "right",
-            frames: [{ key: "playerIMG", frame: 2 }],
-            frameRate: 10,
-            repeat: -1
+            frames: [{ key: "playerIMG", frame: 4 }],
+            frameRate: 10
         });
 
         this.anims.create({
-            key: "down",
+            key: "down_left",
+            frames: [{ key: "playerIMG", frame: 1 }],
+            frameRate: 10
+        });
+
+        this.anims.create({
+            key: "up_right",
             frames: [{ key: "playerIMG", frame: 3 }],
             frameRate: 10
         });
 
-        this.cursors = scene.input.keyboard.createCursorKeys();
+        this.anims.create({
+            key: "down_right",
+            frames: [{ key: "playerIMG", frame: 3 }],
+            frameRate: 10
+        });
 
+        this.anims.create({
+            key: "still",
+            frames: [{ key: "playerIMG", frame: 2 }],
+            frameRate: 10
+        })
+
+        this.cursors = scene.input.keyboard.createCursorKeys();
+        this.setScale(0.5);
     }
 
     update() {
 
         this.setVelocity(0);
-        this.moving = false;
+
+        let moving = false;
+        let movingHorizontally = false;
+        let movingVertically = false;
 
         // Horizontal movement
         if (this.cursors.left.isDown) {
-            this.setVelocityX(-300);
-            this.anims.play('left', true);
-            this.moving = true;
-        } else if (this.cursors.right.isDown) {
-            this.setVelocityX(300);
-            this.anims.play('right', true);
-            this.moving = true;
+            this.setVelocityX(-this.speed);
+            movingHorizontally = true;
+        }
+
+        else if (this.cursors.right.isDown) {
+            this.setVelocityX(this.speed);
+            movingHorizontally = true;
         }
 
         // Vertical movement
         if (this.cursors.up.isDown) {
-            this.setVelocityY(-300);
-            this.anims.play('up', true);
-            this.moving = true;
-        } else if (this.cursors.down.isDown) {
-            this.setVelocityY(300);
-            this.anims.play('down', true);
-            this.moving = true;
+            this.setVelocityY(-this.speed);
+            movingVertically = true;
         }
 
-        if (!this.moving) {
-            this.anims.play('down');
+        else if (this.cursors.down.isDown) {
+            this.setVelocityY(this.speed);
+            movingVertically = true;
+        }
+
+        if (movingHorizontally && movingVertically) {
+            if (this.cursors.up.isDown && this.cursors.left.isDown) {
+                this.anims.play("up_left");
+            }
+            else if (this.cursors.up.isDown && this.cursors.right.isDown) {
+                this.anims.play("up_right");
+            }
+
+            else if (this.cursors.down.isDown && this.cursors.left.isDown) {
+                this.anims.play("down_left");
+            }
+
+            else if (this.cursors.down.isDown && this.cursors.right.isDown) {
+                this.anims.play("down_right");
+            }
+            moving = true;
+        }
+
+        else if (movingHorizontally && this.cursors.left.isDown) {
+            this.anims.play("left");
+            moving = true;
+        }
+
+        else if (movingHorizontally && this.cursors.right.isDown) {
+            this.anims.play("right");
+            moving = true;
+        }
+
+        if (!moving) {
+            this.anims.play('still');
         }
     }
 }
