@@ -4,18 +4,23 @@
             {
                 "worldWidth": 1600,
                 "worldHeight": 1600,
-                "backgroundImage": "sky"
+                "backgroundImage": "underback",
+                "starAmount": 15
             }
         ],
         "walls": [
             {
                 "x": 300,
                 "y": 350,
+                "width": 50,
+                "height": 400,
                 "texture": "ground"
             },
             {
                 "x": 800,
                 "y": 650,
+                "width": 600,
+                "height": 50,
                 "texture": "ground"
             }
         ],
@@ -23,16 +28,16 @@
             {
                 "x": 150,
                 "y": 250,
-                "texture": "flower",
                 "width": 32,
-                "height": 30
+                "height": 30,
+                "texture": "flower"
             },
             {
                 "x": 400,
                 "y": 300,
-                "texture": "flower",
                 "width": 32,
-                "height": 30
+                "height": 30,
+                "texture": "flower"
             }
         ]
     }
