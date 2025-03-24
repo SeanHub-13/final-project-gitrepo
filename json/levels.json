@@ -5,7 +5,7 @@
                 "worldWidth": 1600,
                 "worldHeight": 1600,
                 "backgroundImage": "underback",
-                "starAmount": 15
+                "starAmount": 20
             }
         ],
         "walls": [
@@ -37,7 +37,77 @@
                 "y": 300,
                 "width": 32,
                 "height": 30,
+                "texture": "soulPiece"
+            }
+        ]
+    },
+    "level1": {
+        "config": [
+            {
+                "worldWidth": 3200,
+                "worldHeight": 3200,
+                "backgroundImage": "darkness",
+                "starAmount": 50
+            }
+        ],
+        "walls": [
+            {
+                "x": 800,
+                "y": 500,
+                "width": 50,
+                "height": 400,
+                "texture": "ground"
+            },
+            {
+                "x": 231,
+                "y": 500,
+                "width": 50,
+                "height": 400,
+                "texture": "ground"
+            },
+            {
+                "x": 10,
+                "y": 130,
+                "width": 30,
+                "height": 50,
+                "texture": "ground"
+            }
+        ],
+        "interactables": [
+            {
+                "x": 150,
+                "y": 250,
+                "width": 32,
+                "height": 30,
                 "texture": "flower"
+            },
+            {
+                "x": 400,
+                "y": 300,
+                "width": 32,
+                "height": 30,
+                "texture": "flower"
+            },
+            {
+                "x": 600,
+                "y": 400,
+                "width": 32,
+                "height": 30,
+                "texture": "flower"
+            }
+        ],
+        "images": [
+            {
+                "x": 1000,
+                "y": 410,
+                "texture": "road"
+            }
+        ],
+        "circleCols": [
+            {
+                "x": 210,
+                "y": 1675,
+                "radius": 825
             }
         ]
     }

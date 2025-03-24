@@ -21,6 +21,7 @@ class Interactable extends Phaser.Physics.Arcade.Sprite {
             this.hoverText = this.scene.add.text(this.x - this.width * 1.5, this.y - this.height * 1.5, 'Press E to Interact', { fontFamily: "Arial", fontSize: 13 });
         }
     }
+
     update() {
         if (this.scene.physics.overlap(this.player, this) === false && this.hoverText) {
             if (this.hoverText) {
