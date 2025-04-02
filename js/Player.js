@@ -1,9 +1,9 @@
 class Player extends Phaser.Physics.Arcade.Sprite {
     constructor(scene, x, y, speed) {
 
-        super(scene, x, y, "player");
+        super(scene, x, y);
 
-        scene.add.existing(this);
+        scene.add.existing(this).setDepth(0.5)
         scene.physics.add.existing(this);
 
         this.setCircle(Math.min(this.width, this.height), this.width / 4, this.height / 2);
@@ -12,7 +12,6 @@ class Player extends Phaser.Physics.Arcade.Sprite {
 
         this.anims.create({
             key: "left",
-            // frames: this.anims.generateFrameNumbers('dude', { start: 0, end: 3 }),
             frames: [{ key: "playerIMG", frame: 0 }],
             frameRate: 10
         });

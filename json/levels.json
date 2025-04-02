@@ -5,7 +5,8 @@
                 "worldWidth": 1600,
                 "worldHeight": 1600,
                 "backgroundImage": "underback",
-                "starAmount": 20
+                "starAmount": 20,
+                "levelName": "Level 0"
             }
         ],
         "walls": [
@@ -30,14 +31,47 @@
                 "y": 250,
                 "width": 32,
                 "height": 30,
-                "texture": "flower"
+                "texture": "flower",
+                "textName": "eye"
             },
             {
                 "x": 400,
                 "y": 300,
                 "width": 32,
                 "height": 30,
-                "texture": "soulPiece"
+                "texture": "soulPiece",
+                "textName": "snake"
+            }
+        ],
+        "images": [],
+        "circleCols": [],
+        "doors": [
+            {
+                "x": 750,
+                "y": 1200,
+                "width": 50,
+                "height": 50,
+                "level": "level1"
+            }
+        ],
+        "enemies": [
+            {
+                "x": 500,
+                "y": 500,
+                "speed": 50,
+                "health": 50,
+                "attackDamage": 25
+            }
+        ],
+        "lotuses": [
+            {
+                "x": 150,
+                "y": 250,
+                "width": 32,
+                "height": 30,
+                "texture": "flower",
+                "xMove": 0,
+                "yMove": 0
             }
         ]
     },
@@ -47,7 +81,8 @@
                 "worldWidth": 3200,
                 "worldHeight": 3200,
                 "backgroundImage": "darkness",
-                "starAmount": 50
+                "starAmount": 50,
+                "levelName": "Level 1"
             }
         ],
         "walls": [
@@ -73,29 +108,7 @@
                 "texture": "ground"
             }
         ],
-        "interactables": [
-            {
-                "x": 150,
-                "y": 250,
-                "width": 32,
-                "height": 30,
-                "texture": "flower"
-            },
-            {
-                "x": 400,
-                "y": 300,
-                "width": 32,
-                "height": 30,
-                "texture": "flower"
-            },
-            {
-                "x": 600,
-                "y": 400,
-                "width": 32,
-                "height": 30,
-                "texture": "flower"
-            }
-        ],
+        "interactables": [],
         "images": [
             {
                 "x": 1000,
@@ -109,6 +122,17 @@
                 "y": 1675,
                 "radius": 825
             }
-        ]
+        ],
+        "doors": [
+            {
+                "x": 1030,
+                "y": 1700,
+                "width": 200,
+                "height": 50,
+                "level": "level0"
+            }
+        ],
+        "enemies": [],
+        "lotuses": []
     }
 }

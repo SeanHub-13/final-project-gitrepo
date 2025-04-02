@@ -19,13 +19,13 @@ class CircleCollider extends Phaser.Physics.Arcade.Sprite {
 
     overlap() {
 
-        console.log("Overlapping")
+        // console.log("Overlapping")
     }
 
     noOverlap() {
         this.player.setPosition(1030, 2000);
 
-        console.log("Not Overlapping")
+        // console.log("Not Overlapping")
     }
 
     update() {
