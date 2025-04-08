@@ -1,5 +1,5 @@
 class Interactable extends Phaser.Physics.Arcade.Sprite {
-    constructor(scene, x, y, width, height, texture, textName, animated, canInteract, text, player) {
+    constructor(scene, x, y, width, height, texture, textName, animated, canInteract, text, noMSG, player) {
         super(scene, x, y, texture);
 
         scene.add.existing(this).setDepth(0.4); // Add this game object to the main scene
@@ -13,6 +13,7 @@ class Interactable extends Phaser.Physics.Arcade.Sprite {
         this.hoverText = null;
         this.animated = animated;
         this.canInteract = canInteract;
+        this.noMSG = noMSG;
         this.ePressed = this.scene.input.keyboard.addKey('e');
         this.setup();
     };
@@ -35,17 +36,18 @@ class Interactable extends Phaser.Physics.Arcade.Sprite {
     };
 
     overlapped() {
-        if (this.canInteract) {
-            this.overlapping = this.scene.physics.add.overlap(this.player, this, this.hoverAction, null, this);
-        }
+
+        this.overlapping = this.scene.physics.add.overlap(this.player, this, this.hoverAction, null, this);
+
     };
 
     hoverAction() {
-        let self = this
         // console.log("Player has interacted with:", this.texture);
-        if (!this.hoverText) {
-            this.hoverText = this.scene.add.text(this.x, this.y - this.displayHeight, 'Press E to Interact', { fontFamily: "Palatino Linotype", fontSize: 16, color: '#ada41a', stroke: '#00000', strokeThickness: 4, align: 'center', }).setDepth(1000);
-            this.hoverText.setX(this.x - this.hoverText.width / 2);
+        if (this.canInteract) {
+            if (!this.hoverText) {
+                this.hoverText = this.scene.add.text(this.x, this.y - this.displayHeight + 15, 'Press E to Interact', { fontFamily: "Palatino Linotype", fontSize: 16, color: '#ada41a', stroke: '#00000', strokeThickness: 4, align: 'center', }).setDepth(1000);
+                this.hoverText.setX(this.x - this.hoverText.width / 2);
+            }
         }
         if (!this.listenerAdded) {
             this.listener = () => this.consoleFunc();
@@ -75,6 +77,10 @@ class Interactable extends Phaser.Physics.Arcade.Sprite {
                 this.textBox.remove();
                 this.textBox = null;
             }
+            if (this.noTalk) {
+                this.noTalk.destroy();
+                this.noTalk = null;
+            }
         }
         if (this.textBox) {
             this.textBox.update();
@@ -82,13 +88,33 @@ class Interactable extends Phaser.Physics.Arcade.Sprite {
     }
 
     consoleFunc() {
-        console.log(this.text[this.textName]);
-        if (!this.textBox) {
-            this.textBox = new Textbox(this.scene, this.text[this.textName]);
+        if (this.canInteract) {
+            console.log(this.text[this.textName]);
+
+            if (!this.textBox) {
+                this.textBox = new Textbox(this.scene, this.text[this.textName]);
+            }
+            else {
+                this.textBox.remove();
+                this.textBox = null;
+            }
         }
         else {
-            this.textBox.remove();
-            this.textBox = null;
+            this.noTalk = this.scene.add.text(this.x, this.y - this.displayHeight + 15, this.noMSG, { fontFamily: "Palatino Linotype", fontSize: 16, color: '#ada41a', stroke: '#00000', strokeThickness: 4, align: 'center', }).setDepth(1000);
+            this.noTalk.setX(this.x - this.noTalk.width / 2);
+            this.scene.tweens.add({
+                targets: this.noTalk,
+                y: this.noTalk.y - 25,
+                alpha: 0,
+                duration: 1200,
+                ease: 'Sine.easeInOut',
+                onComplete: () => {
+                    if (this.noTalk) {
+                        this.noTalk.destroy();
+                        this.noTalk = null;
+                    }
+                }
+            });
         }
     };
 }

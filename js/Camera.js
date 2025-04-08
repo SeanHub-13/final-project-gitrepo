@@ -30,13 +30,17 @@ class Camera {
         });
     }
 
-    openVignette() {
-        this.vignette = this.camera.postFX.addVignette(0.5, 0.5, 0.0, 0.5);
+    openVignette(callback) {
+
+        this.vignette.radius = 0.0;
         this.scene.tweens.add({
             targets: this.vignette,
             radius: 0.6,
             duration: 600,
-            ease: 'Sine.easeInOut'
+            ease: 'Sine.easeInOut',
+            onComplete: () => {
+                if (callback) callback();
+            }
         });
     }
 

@@ -12,6 +12,15 @@ class Level {
 
     setupLevel() {
         console.log("setting up!")
+
+        console.log("music")
+        this.music = this.scene.sound.add('mystery');
+        this.music.play();
+        this.music.setLoop(true);
+        this.music.setRate(0.8);
+        this.music.setDetune(500);
+        this.music.setVolume(0.3);
+
         this.text = this.scene.cache.json.get('text');
         this.walls = this.scene.physics.add.staticGroup();
         this.images = this.scene.physics.add.staticGroup();
@@ -37,7 +46,7 @@ class Level {
         for (let j = 0; j < this.levelData.interactables.length; j++) { // Handles Interactable Objects
             let interactable = this.levelData.interactables[j];
             // this.interactables.create(interactable.x, interactable.y, interactable.texture);
-            let newInter = new Interactable(this.scene, interactable.x, interactable.y, interactable.width, interactable.height, interactable.texture, interactable.textName, interactable.animated, interactable.canInteract, this.text, this.player);
+            let newInter = new Interactable(this.scene, interactable.x, interactable.y, interactable.width, interactable.height, interactable.texture, interactable.textName, interactable.animated, interactable.canInteract, this.text, interactable.noMSG, this.player);
             if (newInter) {
                 this.newInter.push(newInter);
                 newInter.overlapped();
@@ -113,16 +122,23 @@ class Level {
         this.interactables?.clear(true, true);
         this.cirCols?.clear(true, true);
         this.doors?.clear(true, true);
+        this.enemies?.clear(true, true);
+        this.lotuses?.clear(true, true);
 
         this.newInter.forEach(interactable => interactable.destroy());
         this.newCirCol.forEach(cirCol => cirCol.destroy());
         this.newDoor.forEach(door => door.destroy());
+        this.newEnemy.forEach(enemy => enemy.destroy());
+        this.newLotus.forEach(lotus => lotus.destroy());
 
+        this.music?.destroy();
         this.displayNameText?.destroy();
 
         this.newInter = [];
         this.newCirCol = [];
         this.newDoor = [];
+        this.newEnemy = [];
+        this.newLotus = [];
 
         this.scene = null;
         this.levelData = null;
