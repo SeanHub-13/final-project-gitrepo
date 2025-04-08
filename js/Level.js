@@ -37,7 +37,7 @@ class Level {
         for (let j = 0; j < this.levelData.interactables.length; j++) { // Handles Interactable Objects
             let interactable = this.levelData.interactables[j];
             // this.interactables.create(interactable.x, interactable.y, interactable.texture);
-            let newInter = new Interactable(this.scene, interactable.x, interactable.y, interactable.width, interactable.height, interactable.texture, interactable.textName, this.text, this.player);
+            let newInter = new Interactable(this.scene, interactable.x, interactable.y, interactable.width, interactable.height, interactable.texture, interactable.textName, interactable.animated, interactable.canInteract, this.text, this.player);
             if (newInter) {
                 this.newInter.push(newInter);
                 newInter.overlapped();
@@ -62,7 +62,7 @@ class Level {
 
         for (let l = 0; l < this.levelData.doors.length; l++) {
             let door = this.levelData.doors[l];
-            let newDoor = new Door(this.scene, door.x, door.y, door.width, door.height, door.level, this.player);
+            let newDoor = new Door(this.scene, door.x, door.y, door.width, door.height, door.level, this.player, door.playerX, door.playerY);
             if (newDoor) {
                 this.newDoor.push(newDoor);
                 newDoor.doorEffect();
@@ -91,15 +91,16 @@ class Level {
         let stars = new Stars(this.scene, this.levelData);
         stars.stars();
         this.displayName(this.levelData.config[0].levelName);
+
     }
 
     displayName(name) {
         this.displayNameText = this.scene.add.text(this.scene.cameras.main.centerX, this.scene.cameras.main.centerY / 2, name, { fontFamily: "Palatino Linotype", fontSize: 46, color: '#ada41a', stroke: '#00000', strokeThickness: 4, align: 'center', }).setOrigin(0.5).setDepth(1000).setScrollFactor(0);
-        this.scene.tweens.add({
+        this.displayed = this.scene.tweens.add({
             targets: this.displayNameText,
             alpha: 0,
-            duration: 2000,
-            delay: 1000,
+            duration: 2500,
+            delay: 1500,
             onComplete: () => {
                 this.displayNameText.destroy();
             }
@@ -116,6 +117,8 @@ class Level {
         this.newInter.forEach(interactable => interactable.destroy());
         this.newCirCol.forEach(cirCol => cirCol.destroy());
         this.newDoor.forEach(door => door.destroy());
+
+        this.displayNameText?.destroy();
 
         this.newInter = [];
         this.newCirCol = [];

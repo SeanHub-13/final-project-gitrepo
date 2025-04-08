@@ -1,5 +1,5 @@
 class Door extends Phaser.Physics.Arcade.Image {
-    constructor(scene, x, y, width, height, level, player) {
+    constructor(scene, x, y, width, height, level, player, playerX, playerY) {
         super(scene, x, y, null);
 
         scene.add.existing(this) // Add this game object to the main scene
@@ -8,6 +8,8 @@ class Door extends Phaser.Physics.Arcade.Image {
         this.width = width;
         this.height = height;
         this.player = player;
+        this.playerX = playerX;
+        this.playerY = playerY;
         this.level = level;
 
         this.particleEmitter = null;
@@ -37,20 +39,15 @@ class Door extends Phaser.Physics.Arcade.Image {
 
     overlapped() {
         this.overlapping = this.scene.physics.add.overlap(this.player, this, this.doorAction, null, this);
+
     }
 
     doorAction() {
-
-        // console.log("moving levels")
         this.scene.levelCode = this.level;
         this.scene.changeLevel = true;
+        console.log(this.playerX + " " + this.playerY)
+        this.player.setPosition(this.playerX, this.playerY);
         this.particleEmitter.stop();
-
-        // if (this.scene.level) {
-        //     this.scene.level.destroy();
-        // }
-        // console.error(nextLevelCode);
-        // console.error(storedLevels);
     }
 
     update() {
