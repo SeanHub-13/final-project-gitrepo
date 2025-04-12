@@ -1,8 +1,11 @@
+// A class for creating levels that set any instances of objects definied in the level.json
 class Level {
     constructor(scene, levelData, player) {
         this.scene = scene;
-        this.levelData = levelData;
-        this.player = player;
+        this.levelData = levelData; // JSON data containing level setup
+        this.player = player; // Reference to the player object
+
+        // Arrays to store dynamically created game objects
         this.newInter = [];
         this.newCirCol = [];
         this.newDoor = [];
@@ -10,18 +13,18 @@ class Level {
         this.newLotus = [];
     }
 
+    // Sets up / Creates everything in the level
     setupLevel() {
-        console.log("setting up!")
+        this.music = this.scene.sound.add('mystery'); // Add a new sound of ID "mystery"
+        this.music.play(); // Play it
+        this.music.setLoop(true); // Make it loop
+        this.music.setRate(0.8); // Set its playrate to 0.8 (slow it down)
+        this.music.setDetune(500); // Detune it by 500
+        this.music.setVolume(0.3); // Set its volume to 30%
 
-        console.log("music")
-        this.music = this.scene.sound.add('mystery');
-        this.music.play();
-        this.music.setLoop(true);
-        this.music.setRate(0.8);
-        this.music.setDetune(500);
-        this.music.setVolume(0.3);
+        this.text = this.scene.cache.json.get('text'); // Load level text content from the "text" json
 
-        this.text = this.scene.cache.json.get('text');
+        // Creates static and dynamic physics groups for various objects
         this.walls = this.scene.physics.add.staticGroup();
         this.images = this.scene.physics.add.staticGroup();
         this.interactables = this.scene.physics.add.staticGroup();
@@ -30,55 +33,55 @@ class Level {
         this.enemies = this.scene.physics.add.group();
         this.lotuses = this.scene.physics.add.staticGroup();
 
-        this.scene.physics.add.collider(this.player, this.walls);
+        this.scene.physics.add.collider(this.player, this.walls); // Collides player with walls
 
-        this.scene.physics.world.setBounds(0, 0, this.levelData.config[0].worldWidth, this.levelData.config[0].worldHeight);
-        this.tilesprite = this.scene.add.tileSprite(0, 0, this.levelData.config[0].worldWidth, this.levelData.config[0].worldHeight, this.levelData.config[0].backgroundImage).setOrigin(0, 0).setDepth(-1);
+        this.scene.physics.world.setBounds(0, 0, this.levelData.config[0].worldWidth, this.levelData.config[0].worldHeight); // Sets the worlds boundaries
 
-        for (let i = 0; i < this.levelData.walls.length; i++) { // Handles Static Objects (Walls Mostly =] )
+        this.tilesprite = this.scene.add.tileSprite(0, 0, this.levelData.config[0].worldWidth, this.levelData.config[0].worldHeight, this.levelData.config[0].backgroundImage).setOrigin(0, 0).setDepth(-1); // Adds background tilesprite
+
+        // For the amount of walls the level has, create a wall with specified instructions from levelData, and add it to any groups that it requires or that store it
+        for (let i = 0; i < this.levelData.walls.length; i++) {
             let wall = this.levelData.walls[i];
             let newWall = this.scene.add.rectangle(wall.x, wall.y, wall.width, wall.height, 30, 255);
-            this.scene.physics.add.existing(newWall, true); // 'true' makes it static
+            this.scene.physics.add.existing(newWall, true);
             this.walls.add(newWall);
-            // this.walls.create(wall.x, wall.y, wall.texture);
         }
 
-        for (let j = 0; j < this.levelData.interactables.length; j++) { // Handles Interactable Objects
+        // For the amount of interactables the level has, create an interactable with specified instructions from levelData, add it to any groups that it requires or that store it
+        for (let j = 0; j < this.levelData.interactables.length; j++) {
             let interactable = this.levelData.interactables[j];
-            // this.interactables.create(interactable.x, interactable.y, interactable.texture);
             let newInter = new Interactable(this.scene, interactable.x, interactable.y, interactable.width, interactable.height, interactable.texture, interactable.textName, interactable.animated, interactable.canInteract, this.text, interactable.noMSG, this.player);
             if (newInter) {
                 this.newInter.push(newInter);
-                newInter.overlapped();
             };
         }
 
+        // For the amount of circular colliders the level has, create a circular collider with specified instructions from levelData, add it to any groups that it requires or that store it
         for (let k = 0; k < this.levelData.circleCols.length; k++) {
             let cirCol = this.levelData.circleCols[k];
-            // let newCirCol = this.scene.add.circle(cirCol.x, cirCol.y, cirCol.radius, 0x000000, 0);
-            let newCirCol = new CircleCollider(this.scene, cirCol.x, cirCol.y, cirCol.radius, this.player);
+            let newCirCol = new CircleCollider(this.scene, cirCol.x, cirCol.y, cirCol.radius, cirCol.teleportX, cirCol.teleportY, this.player);
             if (newCirCol) {
                 this.newCirCol.push(newCirCol);
-                newCirCol.overlapped();
             };
         }
 
+        // For the amount of images the level has, create an image with specified instructions from levelData, add it to any groups that it requires or that store it
         for (let n = 0; n < this.levelData.images.length; n++) {
             let image = this.levelData.images[n];
             let newIMG = this.images.create(image.x, image.y, image.texture).setDepth(-1);
             this.images.add(newIMG)
         }
 
+        // For the amount of doors the level has, create a door with specified instructions from levelData, add it to any groups that it requires or that store it
         for (let l = 0; l < this.levelData.doors.length; l++) {
             let door = this.levelData.doors[l];
-            let newDoor = new Door(this.scene, door.x, door.y, door.width, door.height, door.level, this.player, door.playerX, door.playerY);
+            let newDoor = new Door(this.scene, door.x, door.y, door.width, door.height, door.level, door.counterNeeds, this.player, door.playerX, door.playerY);
             if (newDoor) {
                 this.newDoor.push(newDoor);
-                newDoor.doorEffect();
-                newDoor.overlapped();
             };
         }
 
+        // For the amount of enemies the level has, create an enemy with specified instructions from levelData, add it to any groups that it requires or that store it
         for (let m = 0; m < this.levelData.enemies.length; m++) {
             let enemy = this.levelData.enemies[m];
             let newEnemy = new Enemy(this.scene, enemy.x, enemy.y, enemy.speed, enemy.health, enemy.attackDamage);
@@ -88,21 +91,25 @@ class Level {
             };
         }
 
-        for (let p = 0; p < this.levelData.lotuses.length; p++) { // Handles Interactable Objects
+        // For the amount of lotuses the level has, create a lotus with specified instructions from levelData, add it to any groups that it requires or that store it
+        for (let p = 0; p < this.levelData.lotuses.length; p++) {
             let lotus = this.levelData.lotuses[p];
-            let newLotus = new Lotus(this.scene, lotus.x, lotus.y, lotus.width, lotus.height, lotus.texture, lotus.xMove, lotus.yMove, this.player);
+            let newLotus = new Lotus(this.scene, lotus.x, lotus.y, lotus.width, lotus.height, lotus.texture, lotus.xMove, lotus.yMove, lotus.circular, lotus.spinAngle, lotus.radius, lotus.speed, this.player);
             if (newLotus) {
                 this.newLotus.push(newLotus);
-                newLotus.overlapped();
             };
         }
 
+        // Adds stars effect
         let stars = new Stars(this.scene, this.levelData);
         stars.stars();
+
+        // Shows level name with animation
         this.displayName(this.levelData.config[0].levelName);
 
     }
 
+    // Displays level name in the center of the screen and fade it out
     displayName(name) {
         this.displayNameText = this.scene.add.text(this.scene.cameras.main.centerX, this.scene.cameras.main.centerY / 2, name, { fontFamily: "Palatino Linotype", fontSize: 46, color: '#ada41a', stroke: '#00000', strokeThickness: 4, align: 'center', }).setOrigin(0.5).setDepth(1000).setScrollFactor(0);
         this.displayed = this.scene.tweens.add({
@@ -116,6 +123,7 @@ class Level {
         });
     }
 
+    // Cleans up all game objects and references when "leaving" the level
     destroy() {
         this.walls?.clear(true, true);
         this.images?.clear(true, true);
@@ -145,17 +153,17 @@ class Level {
         this.player = null;
     }
 
+    // Called every frame to update level state
     levelChecker() {
-        // Put stuff that we might check for in a level here, like a specific goal type
-        // Maybe "collect X amount of stars", with X being a variable you get in the constructor
+        // Scrolls background slowly for a sorta parallax effect
         if (this.tilesprite) {
             this.tilesprite.tilePositionY -= 0.025;
         }
+
+        // Updates each object that requires per-frame behavior
         this.newInter.forEach(interactable => interactable.update());
         this.newCirCol.forEach(cirCol => cirCol.update());
+        this.newDoor.forEach(door => door.update());
+        this.newLotus.forEach(lotus => lotus.update());
     }
-
-    // consoleLog(interactable) {
-    //     console.log("Player has interacted with:", interactable.texture);
-    // }
 }

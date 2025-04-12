@@ -58,6 +58,7 @@
                 "width": 50,
                 "height": 50,
                 "level": "level2",
+                "counterNeeds": 0,
                 "playerX": 1000,
                 "playerY": 1000
             }
@@ -79,7 +80,11 @@
                 "height": 30,
                 "texture": "flower",
                 "xMove": 0,
-                "yMove": 0
+                "yMove": 0,
+                "circular": true,
+                "spinAngle": 1,
+                "radius": 100,
+                "speed": 1
             }
         ]
     },
@@ -106,7 +111,9 @@
             {
                 "x": 210,
                 "y": 1675,
-                "radius": 825
+                "radius": 825,
+                "teleportX": 1030,
+                "teleportY": 2000
             }
         ],
         "doors": [
@@ -116,12 +123,53 @@
                 "width": 200,
                 "height": 50,
                 "level": "level2",
+                "counterNeeds": 3,
                 "playerX": 1605,
                 "playerY": 2000
             }
         ],
         "enemies": [],
-        "lotuses": []
+        "lotuses": [
+            {
+                "x": 1225,
+                "y": 1850,
+                "width": 32,
+                "height": 32,
+                "texture": "flower",
+                "xMove": 0,
+                "yMove": 0,
+                "circular": true,
+                "spinAngle": 1,
+                "radius": 75,
+                "speed": 0.1
+            },
+            {
+                "x": 700,
+                "y": 1825,
+                "width": 32,
+                "height": 32,
+                "texture": "flower",
+                "xMove": 0,
+                "yMove": 0,
+                "circular": true,
+                "spinAngle": 1,
+                "radius": 50,
+                "speed": 0.05
+            },
+            {
+                "x": 1030,
+                "y": 1825,
+                "width": 32,
+                "height": 32,
+                "texture": "flower",
+                "xMove": 0,
+                "yMove": 0,
+                "circular": true,
+                "spinAngle": 1,
+                "radius": 110,
+                "speed": 0.15
+            }
+        ]
     },
     "level2": {
         "config": [
@@ -296,6 +344,7 @@
                 "width": 50,
                 "height": 50,
                 "level": "level0",
+                "counterNeeds": 0,
                 "playerX": 1000,
                 "playerY": 1000
             }

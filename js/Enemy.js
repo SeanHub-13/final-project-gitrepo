@@ -1,3 +1,4 @@
+// Unfinished class, meant to be the enemy in level 3 - I won't comment this as its just basically a stripped down Player.js
 class Enemy extends Phaser.Physics.Arcade.Sprite {
     constructor(scene, x, y, speed, health, attackDamage) {
 

@@ -1,0 +1,1 @@
+// Currently empty melee class, eventually will be the base for both the player and enemy attack that will be a collision based temporary close range projectile

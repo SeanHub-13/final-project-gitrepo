@@ -1,15 +1,20 @@
+// A class for creating a player
 class Player extends Phaser.Physics.Arcade.Sprite {
     constructor(scene, x, y, speed) {
-
         super(scene, x, y);
 
-        scene.add.existing(this).setDepth(0.5)
-        scene.physics.add.existing(this);
+        scene.add.existing(this).setDepth(0.5) // Adds this player sprite to the scene at specified depth (z) level
+        scene.physics.add.existing(this); // Include physics
 
+        // Sets a circular hitbox, centered within the sprite
         this.setCircle(Math.min(this.width, this.height), this.width / 4, this.height / 2);
+
+        // Prevents the player from moving out of bounds
         this.setCollideWorldBounds(true);
+
         this.speed = speed;
 
+        // Creates directional animations using frames from the playerIMG spritesheet
         this.anims.create({
             key: "left",
             frames: [{ key: "playerIMG", frame: 0 }],
@@ -52,19 +57,19 @@ class Player extends Phaser.Physics.Arcade.Sprite {
             frameRate: 10
         })
 
-        this.cursors = scene.input.keyboard.createCursorKeys();
-        this.setScale(0.5);
+        this.cursors = scene.input.keyboard.createCursorKeys(); // Stores keyboard arrow input controls
+        this.setScale(0.5); // Makes the player sprite half as big
     }
 
+    // This update function pretty much just control player movement
     update() {
+        this.setVelocity(0); // Resets any existing movement before processing input, basically 100% friction for the player
 
-        this.setVelocity(0);
+        let moving = false; // Tracks any movement
+        let movingHorizontally = false; // Tracks left/right movement
+        let movingVertically = false; // Tracks up/down movement
 
-        let moving = false;
-        let movingHorizontally = false;
-        let movingVertically = false;
-
-        // Horizontal movement
+        // Handles horizontal movement
         if (this.cursors.left.isDown) {
             this.setVelocityX(-this.speed);
             movingHorizontally = true;
@@ -75,7 +80,7 @@ class Player extends Phaser.Physics.Arcade.Sprite {
             movingHorizontally = true;
         }
 
-        // Vertical movement
+        // Handles vertical movement
         if (this.cursors.up.isDown) {
             this.setVelocityY(-this.speed);
             movingVertically = true;
@@ -86,6 +91,7 @@ class Player extends Phaser.Physics.Arcade.Sprite {
             movingVertically = true;
         }
 
+        // Handles diagonal movement animations
         if (movingHorizontally && movingVertically) {
             if (this.cursors.up.isDown && this.cursors.left.isDown) {
                 this.anims.play("up_left");
@@ -104,6 +110,7 @@ class Player extends Phaser.Physics.Arcade.Sprite {
             moving = true;
         }
 
+        // Handles straight horizontal movement animations
         else if (movingHorizontally && this.cursors.left.isDown) {
             this.anims.play("left");
             moving = true;
@@ -114,6 +121,7 @@ class Player extends Phaser.Physics.Arcade.Sprite {
             moving = true;
         }
 
+        // If no input detected, play idle animation
         if (!moving) {
             this.anims.play('still');
         }
