@@ -25,7 +25,15 @@ To move forward, you must recover the essential aspects of the self:
 Each level presents a new fragment of the soul. Only once they are reunited can you ascend beyond the veil.
 
 ---
+## ✒️ Spirit Search: Artists Statement
 
+What if the afterlife in games moved beyond aesthetics and designs based on Abrahamic conceptions of Hell and the Greco-Roman underworld? Without Heaven or Hell, without the River Styx and shadowy aesthetics, what new visions could emerge? Spirit Search explores an alternative approach, drawing inspiration from three distinct cultural perspectives: Chinese philosophy, Zoroastrianism, and ancient Egyptian understandings of the afterlife.
+
+From a technical perspective we tried to create something that feels smooth and relatively modular while keeping a modest scale, and have accomplished this through an OOP styled approach as well as the use of JSON's for data storage.
+
+The game’s level and concept design are rooted in the idea of the soul arriving fragmented in the afterlife. Drawing loosely from ancient Egyptian beliefs, the experience reflects a journey where the spirit must be restored piece by piece. Each level is a reflection of a soul’s aspect seeking reconciliation and wholeness.
+
+---
 ## 🎮 Controls
 
 → **Arrow Keys** - Move your character  
