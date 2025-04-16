@@ -1,6 +1,6 @@
 // A class for creating interactive game objects the player can interact with using the E key
 class Interactable extends Phaser.Physics.Arcade.Sprite {
-    constructor(scene, x, y, width, height, texture, textName, animated, canInteract, text, noMSG, player) {
+    constructor(scene, x, y, width, height, texture, textName, animated, canInteract, text, noMSG, question, player) {
         super(scene, x, y, texture); // Calls the parent class (Sprite)
 
         scene.add.existing(this).setDepth(0.4); // Add this game object to the main scene
@@ -15,6 +15,7 @@ class Interactable extends Phaser.Physics.Arcade.Sprite {
         this.animated = animated; // Whether this object has a looping animation
         this.canInteract = canInteract; // Whether interaction is currently allowed
         this.noMSG = noMSG; // Message shown if interaction is not allowed
+        this.question = question;
         this.ePressed = this.scene.input.keyboard.addKey('e'); // Add keyboard input for the E key
         this.setup(); // Calls this.setup()
         this.overlapped();
@@ -82,7 +83,6 @@ class Interactable extends Phaser.Physics.Arcade.Sprite {
             }
             // Remove the non-interaction message
             if (this.noTalk) {
-                this.noTalk.destroy();
                 this.noTalk = null;
             }
         }
@@ -98,7 +98,7 @@ class Interactable extends Phaser.Physics.Arcade.Sprite {
         if (this.canInteract) {
             // If there is no textbox, make a new textbox
             if (!this.textBox) {
-                this.textBox = new Textbox(this.scene, this.text[this.textName]);
+                this.textBox = new Textbox(this.scene, this.text[this.textName], this.question);
             }
             // Otherwise, remove the textbox
             else {
@@ -108,7 +108,7 @@ class Interactable extends Phaser.Physics.Arcade.Sprite {
         }
         // Shows a brief floating message if player can't interact with this object
         else {
-            this.noTalk = this.scene.add.text(this.x, this.y - this.displayHeight + 15, this.noMSG, { fontFamily: "Palatino Linotype", fontSize: 16, color: '#ada41a', stroke: '#00000', strokeThickness: 4, align: 'center', }).setDepth(1000);
+            this.noTalk = this.scene.add.text(this.x, this.y - this.displayHeight / 1.75, this.noMSG, { fontFamily: "Palatino Linotype", fontSize: 18, color: '#ada41a', stroke: '#00000', strokeThickness: 4, align: 'center', }).setDepth(1000);
             this.noTalk.setX(this.x - this.noTalk.width / 2);
             this.scene.tweens.add({
                 targets: this.noTalk,

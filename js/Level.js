@@ -50,7 +50,7 @@ class Level {
         // For the amount of interactables the level has, create an interactable with specified instructions from levelData, add it to any groups that it requires or that store it
         for (let j = 0; j < this.levelData.interactables.length; j++) {
             let interactable = this.levelData.interactables[j];
-            let newInter = new Interactable(this.scene, interactable.x, interactable.y, interactable.width, interactable.height, interactable.texture, interactable.textName, interactable.animated, interactable.canInteract, this.text, interactable.noMSG, this.player);
+            let newInter = new Interactable(this.scene, interactable.x, interactable.y, interactable.width, interactable.height, interactable.texture, interactable.textName, interactable.animated, interactable.canInteract, this.text, interactable.noMSG, interactable.question, this.player);
             if (newInter) {
                 this.newInter.push(newInter);
             };

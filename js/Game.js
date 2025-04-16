@@ -45,7 +45,12 @@ class Game extends Phaser.Scene {
         this.load.image('road', 'resources/images/road.png');
         this.load.image('road_continuous', 'resources/images/road_continuous.png');
         this.load.image('darkness', 'resources/images/darkness.png');
-        this.load.image('castle', 'resources/images/castle.png');
+        this.load.image('castle1', 'resources/images/castle1.png');
+        this.load.image('castle2', 'resources/images/castle2.png');
+        this.load.image('castle3', 'resources/images/castle3.png');
+        this.load.image('castle4', 'resources/images/castle4.png');
+        this.load.image('castle5', 'resources/images/castle5.png');
+        this.load.image('castle6', 'resources/images/castle6.png');
         this.load.image('instructions', 'resources/images/instructions.png');
         // Loads sprite sheets
         this.load.spritesheet('playerIMG', 'resources/images/soulflame.png', { frameWidth: 81, frameHeight: 89, spacing: 9 });

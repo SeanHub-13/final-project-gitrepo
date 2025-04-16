@@ -14,6 +14,7 @@ class Stars extends Level {
             lifespan: { min: 3000, max: 5000 },
             scaleX: 0.25,
             scaleY: 0.25,
+            speedY: -5,
             blendMode: 'SCREEN'
 
         });

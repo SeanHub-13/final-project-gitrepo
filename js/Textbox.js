@@ -1,15 +1,17 @@
 // Class that represents a dialog textbox which displays hints and can be cycled through using the R key
 class Textbox {
-    constructor(scene, text) {
+    constructor(scene, text, question) {
         this.scene = scene; // Reference to the Phaser scene
         this.text = text; // The specific text object specified
         this.currentText = 0; // Which part of the text object to show
-        this.textBox(); // Calls textbox
+        this.question = question;
+        this.boxMade = false;
         this.rPressed = this.scene.input.keyboard.addKey('r'); // Add keyboard input for the R key
     }
 
     // Creates the textbox UI elements and sets their properties
     textBox() {
+        this.boxMade = true;
         this.cam = this.scene.cameras.main; // Reference to the main camera
 
         this.boxWindow = this.scene.physics.add.group(); // Create a physics group for textbox elements
@@ -35,6 +37,50 @@ class Textbox {
             this.nextR.setX(this.box.x + 160 - this.nextR.width / 2);
             this.nextR.setY(this.box.y + 45 - this.nextR.height / 2);
             this.tweenAdd(); // Start animation loop for blinking "(R)"
+        }
+    }
+
+    questionBox() {
+        this.boxMade = true;
+        this.cam = this.scene.cameras.main;
+
+        this.boxWindow = this.scene.physics.add.group();
+
+        // Main background box
+        this.box = this.scene.add.rectangle(this.cam.width / 2, this.cam.height * 0.70, this.cam.width / 2, this.cam.height / 3, 0xfff3d4).setDepth(1000).setStrokeStyle(4, 0xada41a);
+        this.box.setScrollFactor(0);
+
+        // Add the main box to the group
+        this.boxWindow.add(this.box);
+
+        // Add the question text near the top of the box
+        this.questionText = this.scene.add.text(0, 0, this.text[this.currentText]["question"], { fontFamily: "Palatino Linotype", fontSize: 22, color: '#5a4e10', stroke: '#ada41a', strokeThickness: 2, align: 'center', wordWrap: { width: this.box.width * 0.9 } }).setDepth(1001);
+        this.questionText.setScrollFactor(0);
+        this.questionText.setX(this.box.x - this.questionText.width / 2);
+        this.questionText.setY(this.box.y - this.box.height / 2 + 20);
+        this.boxWindow.add(this.questionText);
+
+        this.choiceBoxes = [];
+        this.choiceTextBoxes = [];
+        this.boxPadding = 10;
+        this.boxWidth = this.box.width / 2 - this.boxPadding * 2;
+        this.boxHeight = 40;
+
+        for (let i = 0; i < 4; i++) {
+            this.isTop = i < 2;
+            this.offsetX = (i % 2 === 0) ? -this.boxWidth / 2 - this.boxPadding : this.boxWidth / 2 + this.boxPadding;
+            this.offsetY = this.isTop ? 90 : 150;
+
+            this.choiceBox = this.scene.add.rectangle(this.box.x + this.offsetX, this.box.y - this.box.height / 2 + this.offsetY, this.boxWidth, this.boxHeight, 0xffffff).setStrokeStyle(2, 0xada41a).setDepth(1001);
+            this.choiceBox.setScrollFactor(0);
+            this.boxWindow.add(this.choiceBox);
+            this.choiceBoxes.push(this.choiceBox);
+
+            console.log(this.text[1]["choices"][i])
+            this.choiceText = this.scene.add.text(this.choiceBox.x, this.choiceBox.y, this.text[1]["choices"][i], { fontFamily: "Palatino Linotype", fontSize: 18, color: '#5a4e10', align: 'center', wordWrap: { width: this.boxWidth - 10 } }).setOrigin(0.5).setDepth(1002);
+            this.choiceText.setScrollFactor(0);
+            this.boxWindow.add(this.choiceText);
+            this.choiceTextBoxes.push(this.choiceText);
         }
     }
 
@@ -68,22 +114,34 @@ class Textbox {
 
     // Update method that handles user input for cycling through the text
     update() {
-        // If r is pressed
-        if (Phaser.Input.Keyboard.JustDown(this.rPressed)) {
-            this.currentText++; // Move onto the next text
+        if (this.question === false) {
+            if (this.boxMade === false) {
+                this.textBox(); // Calls textbox
+            }
+            if (this.boxMade === true) {
+                // If r is pressed
+                if (Phaser.Input.Keyboard.JustDown(this.rPressed)) {
+                    this.currentText++; // Move onto the next text
 
-            // If the next texts value is beyond the amount of texts
-            if (this.currentText >= this.text.length) {
-                this.currentText = 0; // Move back to the start
+                    // If the next texts value is beyond the amount of texts
+                    if (this.currentText >= this.text.length) {
+                        this.currentText = 0; // Move back to the start
+                    }
+
+                    // Update displayed text to new text
+                    this.textWrite.setText(this.text[this.currentText]["hint"]);
+
+                    // Centers the text within the box
+                    this.textWrite.setX(this.box.x - this.textWrite.width / 2);
+                    this.textWrite.setY(this.box.y - this.textWrite.height / 2);
+                }
             }
 
-            // Update displayed text to new text
-            this.textWrite.setText(this.text[this.currentText]["hint"]);
-
-            // Centers the text within the box
-            this.textWrite.setX(this.box.x - this.textWrite.width / 2);
-            this.textWrite.setY(this.box.y - this.textWrite.height / 2);
-
+        }
+        else {
+            if (this.boxMade === false) {
+                this.questionBox()
+            }
         }
     }
 
@@ -104,5 +162,18 @@ class Textbox {
         if (this.rPressed) {
             this.rPressed.off('down');
         }
+
+        if (this.questionText) {
+            this.questionText.destroy();
+        }
+
+        if (this.choiceBoxes) {
+            this.choiceBoxes.forEach(box => box.destroy());
+        }
+
+        if (this.choiceText) {
+            this.choiceText.destroy();
+        }
+
     }
 }

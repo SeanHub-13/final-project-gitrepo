@@ -35,7 +35,8 @@
                 "textName": "eye",
                 "animated": false,
                 "canInteract": true,
-                "noMSG": "..."
+                "noMSG": "...",
+                "question": false
             },
             {
                 "x": 400,
@@ -46,7 +47,8 @@
                 "textName": "snake",
                 "animated": false,
                 "canInteract": true,
-                "noMSG": "..."
+                "noMSG": "...",
+                "question": false
             }
         ],
         "images": [],
@@ -249,7 +251,8 @@
                 "textName": "eye",
                 "animated": true,
                 "canInteract": false,
-                "noMSG": "..."
+                "noMSG": "...",
+                "question": false
             },
             {
                 "x": 700,
@@ -260,7 +263,8 @@
                 "textName": "flower",
                 "animated": true,
                 "canInteract": true,
-                "noMSG": "..."
+                "noMSG": "...",
+                "question": false
             },
             {
                 "x": 2550,
@@ -271,18 +275,80 @@
                 "textName": "crowbush",
                 "animated": true,
                 "canInteract": true,
-                "noMSG": "..."
+                "noMSG": "...",
+                "question": false
             },
             {
                 "x": 350,
-                "y": 725,
+                "y": 950,
                 "width": 88.95,
                 "height": 85.5,
-                "texture": "castle",
+                "texture": "castle1",
                 "textName": "crowbush",
                 "animated": false,
                 "canInteract": false,
-                "noMSG": "💗"
+                "noMSG": "💗",
+                "question": false
+            },
+            {
+                "x": 1725,
+                "y": 525,
+                "width": 115.2,
+                "height": 115.2,
+                "texture": "castle2",
+                "textName": "crowbush",
+                "animated": false,
+                "canInteract": false,
+                "noMSG": "💙",
+                "question": false
+            },
+            {
+                "x": 1050,
+                "y": 1075,
+                "width": 115.2,
+                "height": 115.2,
+                "texture": "castle3",
+                "textName": "crowbush",
+                "animated": false,
+                "canInteract": false,
+                "noMSG": "💚",
+                "question": false
+            },
+            {
+                "x": 2000,
+                "y": 1450,
+                "width": 115.2,
+                "height": 115.2,
+                "texture": "castle4",
+                "textName": "crowbush",
+                "animated": false,
+                "canInteract": false,
+                "noMSG": "💛",
+                "question": false
+            },
+            {
+                "x": 2450,
+                "y": 925,
+                "width": 115.2,
+                "height": 115.2,
+                "texture": "castle5",
+                "textName": "crowbush",
+                "animated": false,
+                "canInteract": false,
+                "noMSG": "💜",
+                "question": false
+            },
+            {
+                "x": 1350,
+                "y": 725,
+                "width": 115.2,
+                "height": 115.2,
+                "texture": "castle6",
+                "textName": "crowbush",
+                "animated": false,
+                "canInteract": false,
+                "noMSG": "🖤",
+                "question": false
             },
             {
                 "x": 200,
@@ -293,7 +359,8 @@
                 "textName": "eye",
                 "animated": true,
                 "canInteract": true,
-                "noMSG": "..."
+                "noMSG": "...",
+                "question": false
             },
             {
                 "x": 2050,
@@ -304,7 +371,8 @@
                 "textName": "snake",
                 "animated": true,
                 "canInteract": true,
-                "noMSG": "..."
+                "noMSG": "...",
+                "question": false
             },
             {
                 "x": 1600,
@@ -315,7 +383,8 @@
                 "textName": "tree",
                 "animated": true,
                 "canInteract": true,
-                "noMSG": "..."
+                "noMSG": "...",
+                "question": false
             },
             {
                 "x": 1070,
@@ -323,10 +392,11 @@
                 "width": 58.8,
                 "height": 105.8,
                 "texture": "question",
-                "textName": "eye",
+                "textName": "question",
                 "animated": true,
-                "canInteract": false,
-                "noMSG": "..."
+                "canInteract": true,
+                "noMSG": "...",
+                "question": true
             }
         ],
         "images": [

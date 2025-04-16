@@ -26,5 +26,18 @@
         {
             "hint": "I miss my friends and mourn their departure, knowing what to call. What song do I sing that lingers in the air after someone is gone?"
         }
+    ],
+    "question": [
+        {
+            "question": "What do you seek?"
+        },
+        {
+            "choices": [
+                "1: Wind",
+                "2: Name",
+                "3: Wind?",
+                "4: Is it wind???"
+            ]
+        }
     ]
 }

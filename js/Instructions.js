@@ -10,8 +10,8 @@ class Instructions extends Phaser.Physics.Arcade.Sprite {
     instructionCreate() {
         this.cam = this.scene.cameras.main; // References the main camera
 
-        this.instructIMG = this.scene.add.image(this.cam.width / 2, this.cam.height / 2, 'instructions').setDepth(999) // Adds instruction image to the center of the screen
-        this.instructIMG.setDisplaySize(434.1, 614.4); // Modifies their size when displayed
+        this.instructIMG = this.scene.add.image(this.cam.width / 2, this.cam.height / 1.7, 'instructions').setDepth(999) // Adds instruction image to the center of the screen
+        this.instructIMG.setDisplaySize(578.8, 819.2); // Modifies their size when displayed
         this.instructIMG.setScrollFactor(0); // Sets their scroll factor to 0 so that it can stay with the camera
 
 
